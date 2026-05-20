@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNAPP Workshop Lab — Repository Guide</title>
+<style>
+:root {
+  --red: #E1001A;
+  --red-dark: #B8001A;
+  --bg: #0A0A0A;
+  --bg-card: #141414;
+  --bg-card-hover: #1A1A1A;
+  --border: #2A2A2A;
+  --text: #E8E8E8;
+  --text-muted: #999;
+  --text-dim: #666;
+  --code-bg: #1E1E1E;
+  --sidebar-w: 280px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 100;
+}
+.sidebar-brand {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sidebar-brand h1 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.5px;
+}
+.sidebar-brand p {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.sidebar nav a {
+  display: block;
+  padding: 8px 20px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.sidebar nav a:hover {
+  color: var(--text);
+  background: rgba(225,0,26,0.05);
+  border-left-color: var(--red);
+}
+.sidebar nav .section-label {
+  padding: 16px 20px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Main */
+.main {
+  margin-left: var(--sidebar-w);
+  padding: 48px 60px;
+  width: calc(100% - var(--sidebar-w));
+  max-width: none;
+}
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+}
+h2:first-of-type { border-top: none; margin-top: 0; }
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 32px 0 12px;
+  color: var(--red);
+}
+h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 8px;
+  color: var(--text);
+}
+p { margin: 10px 0; color: var(--text-muted); }
+strong { color: var(--text); }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #1a0005 0%, #0A0A0A 60%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px;
+  margin-bottom: 48px;
+}
+.hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.hero h1 span { color: var(--red); }
+.hero p { font-size: 16px; color: var(--text-muted); }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 12px 0;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--red); }
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.card p { font-size: 13px; margin: 0; }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  color: var(--text);
+  font-weight: 600;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+td code {
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--red);
+}
+
+/* Code blocks */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  width: fit-content;
+  max-width: 100%;
+}
+code { font-family: 'SF Mono', 'Fira Code', monospace; color: var(--text); }
+
+/* Flow diagram */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.flow-step {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.flow-arrow { color: var(--red); font-size: 16px; }
+
+/* Architecture */
+.arch-diagram {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  margin: 24px auto;
+  max-width: 800px;
+}
+.arch-vpc {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+}
+.arch-vpc-label {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--bg-card);
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+.arch-vm {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: var(--code-bg);
+}
+.arch-vm:last-child { margin-bottom: 0; }
+.arch-vm-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.arch-vm-icon {
+  width: 32px; height: 32px;
+  background: var(--red);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: white; font-weight: 700;
+}
+.arch-vm-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.arch-vm-subtitle { font-size: 11px; color: var(--text-dim); }
+.arch-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.arch-svc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+.arch-svc-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.arch-svc-port { font-size: 11px; color: var(--red); margin-top: 2px; }
+.arch-svc-desc { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+.tag-tf { background: #1a1a2e; color: #7b61ff; border: 1px solid #3d3485; }
+.tag-ansible { background: #1a1e1a; color: #5bbf5b; border: 1px solid #2e5e2e; }
+.tag-script { background: #2e1a0d; color: #f5a623; border: 1px solid #5e3a1a; }
+.tag-app { background: #0d1a2e; color: #4da6ff; border: 1px solid #1a3a5e; }
+.tag-docs { background: #1a1a1a; color: #999; border: 1px solid #333; }
+.tag-react { background: #1a2e2e; color: #61dafb; border: 1px solid #1a4a4a; }
+
+/* Callout */
+.callout {
+  border-left: 4px solid var(--red);
+  background: rgba(225,0,26,0.05);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+.callout p { margin: 0; font-size: 13px; }
+
+/* Grid */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h1>CNAPP Workshop Lab</h1>
+    <p>Repository Documentation</p>
+  </div>
+  <nav>
+    <div class="section-label">Overview</div>
+    <a href="#big-picture">The Big Picture</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#prerequisites">Prerequisites</a>
+    <a href="#quick-start">Quick Start</a>
+
+    <div class="section-label">Root Scripts</div>
+    <a href="#deploy">deploy.sh</a>
+    <a href="#destroy">destroy.sh</a>
+
+    <div class="section-label">Terraform</div>
+    <a href="#terraform">Infrastructure Overview</a>
+    <a href="#tf-files">Terraform Files</a>
+    <a href="#tf-templates">Templates</a>
+
+    <div class="section-label">Ansible</div>
+    <a href="#ansible">Provisioning Overview</a>
+    <a href="#role-common">Role: common</a>
+    <a href="#role-k3s">Role: k3s</a>
+    <a href="#role-gitea">Role: gitea</a>
+    <a href="#role-falcon">Role: falcon</a>
+    <a href="#role-argocd">Role: argocd</a>
+    <a href="#role-sample-app">Role: sample-app</a>
+    <a href="#role-auto-attack">Role: auto-attack</a>
+    <a href="#role-lab-guide">Role: lab-guide</a>
+
+    <div class="section-label">Sample App</div>
+    <a href="#sample-app">Peregrine App</a>
+    <a href="#cicd-pipeline">CI/CD Pipeline</a>
+
+    <div class="section-label">Lab Guide</div>
+    <a href="#lab-guide-app">React Lab Guide</a>
+
+    <div class="section-label">CloudShare</div>
+    <a href="#cloudshare">CloudShare Integration</a>
+
+    <div class="section-label">Docs</div>
+    <a href="#docs">Documentation</a>
+
+    <div class="section-label">Usage</div>
+    <a href="#replication">Replicating This Lab</a>
+    <a href="#customization">Customization</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+<!-- Hero -->
+<div class="hero">
+  <h1><span>CNAPP Workshop</span> Lab Repository</h1>
+  <p>A complete, automated lab environment for demonstrating CrowdStrike Falcon Cloud Security capabilities. This guide explains every script, file, and component — and how they work together to deliver an end-to-end cloud security workshop.</p>
+</div>
+
+<!-- Big Picture -->
+<h2 id="big-picture">The Big Picture</h2>
+<p>This repository deploys a <strong>two-VM environment on AWS</strong> that demonstrates the full CrowdStrike CNAPP story:</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">Victim VM (Ubuntu)</div>
+    <p>Runs K3s (lightweight Kubernetes) with a CI/CD pipeline (Gitea + ArgoCD), a deliberately vulnerable Flask app ("Peregrine"), and CrowdStrike Falcon agents.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Attacker VM (Windows)</div>
+    <p>Pre-configured Windows desktop with Firefox and Metasploit. Participants RDP in and launch guided attack simulations against the victim.</p>
+  </div>
+</div>
+
+<p>The workshop flow takes participants through:</p>
+<div class="flow">
+  <span class="flow-step">Deploy Code</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">CI/CD Scan</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Fix Vulns</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">GitOps Deploy</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">KAC Admission</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Attack Sim</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Falcon Detection</span>
+</div>
+
+<h3>How the Layers Fit Together</h3>
+<p>The repo is organized in layers, each building on the previous:</p>
+<table>
+  <tr><th>Layer</th><th>Directory</th><th>Responsibility</th></tr>
+  <tr><td><span class="tag tag-script">Orchestration</span></td><td><code>deploy.sh</code> / <code>destroy.sh</code></td><td>Entry points — one-command deploy and teardown</td></tr>
+  <tr><td><span class="tag tag-tf">Infrastructure</span></td><td><code>terraform/</code></td><td>AWS resources: VPC, security groups, EC2 instances, IAM, SSH keys</td></tr>
+  <tr><td><span class="tag tag-ansible">Provisioning</span></td><td><code>ansible/</code></td><td>Software on the victim VM: K3s, Gitea, ArgoCD, Falcon, sample app, lab guide</td></tr>
+  <tr><td><span class="tag tag-app">Application</span></td><td><code>sample-app/</code></td><td>The vulnerable "Peregrine" Flask app that gets deployed through CI/CD</td></tr>
+  <tr><td><span class="tag tag-react">Lab Guide</span></td><td><code>lab-guide/</code></td><td>React SPA that walks participants through the workshop</td></tr>
+  <tr><td><span class="tag tag-docs">Documentation</span></td><td><code>docs/</code></td><td>Operational guides for instructors and administrators</td></tr>
+</table>
+
+<!-- Architecture -->
+<h2 id="architecture">Architecture</h2>
+<div class="arch-diagram">
+  <div class="arch-vpc">
+    <span class="arch-vpc-label">AWS Default VPC</span>
+
+    <div class="arch-vm">
+      <div class="arch-vm-header">
+        <div class="arch-vm-icon">V</div>
+        <div>
+          <div class="arch-vm-title">Victim EC2</div>
+          <div class="arch-vm-subtitle">t3.large &middot; Ubuntu 22.04 &middot; K3s Cluster</div>
+        </div>
+      </div>
+      <div class="arch-services">
+        <div class="arch-svc">
+          <div class="arch-svc-name">Gitea</div>
+          <div class="arch-svc-port">:30300</div>
+          <div class="arch-svc-desc">Git + CI/CD + Registry</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">ArgoCD</div>
+          <div class="arch-svc-port">:30444</div>
+          <div class="arch-svc-desc">GitOps Deploy</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Lab Guide</div>
+          <div class="arch-svc-port">:30080</div>
+          <div class="arch-svc-desc">Interactive Workshop</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Peregrine</div>
+          <div class="arch-svc-port">:30888</div>
+          <div class="arch-svc-desc">Vulnerable Flask App</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Falcon Sensor</div>
+          <div class="arch-svc-port">DaemonSet</div>
+          <div class="arch-svc-desc">Runtime Protection</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Falcon KAC</div>
+          <div class="arch-svc-port">Webhook</div>
+          <div class="arch-svc-desc">Admission Control</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-vm">
+      <div class="arch-vm-header">
+        <div class="arch-vm-icon" style="background:#4A9EFF;">A</div>
+        <div>
+          <div class="arch-vm-title">Attacker EC2</div>
+          <div class="arch-vm-subtitle">t3.medium &middot; Windows Server 2022</div>
+        </div>
+      </div>
+      <div class="arch-services">
+        <div class="arch-svc">
+          <div class="arch-svc-name">RDP</div>
+          <div class="arch-svc-port">:3389</div>
+          <div class="arch-svc-desc">Remote Desktop</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Firefox</div>
+          <div class="arch-svc-port">&nbsp;</div>
+          <div class="arch-svc-desc">Web Browser</div>
+        </div>
+        <div class="arch-svc">
+          <div class="arch-svc-name">Metasploit</div>
+          <div class="arch-svc-port">&nbsp;</div>
+          <div class="arch-svc-desc">Attack Framework</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Prerequisites -->
+<h2 id="prerequisites">Prerequisites</h2>
+<p>To replicate this lab, you need:</p>
+<table>
+  <tr><th>Tool</th><th>Version</th><th>Purpose</th></tr>
+  <tr><td><code>aws</code> CLI</td><td>v2+</td><td>AWS authentication (<code>aws sts get-caller-identity</code> must work)</td></tr>
+  <tr><td><code>terraform</code></td><td>&ge; 1.5</td><td>Infrastructure provisioning</td></tr>
+  <tr><td><code>ansible</code></td><td>&ge; 2.15</td><td>VM configuration management</td></tr>
+  <tr><td>SSH client</td><td>Any</td><td>Connecting to VMs and port forwarding</td></tr>
+</table>
+
+<div class="callout">
+  <p><strong>CrowdStrike API credentials</strong> are optional but recommended. Without them, participants manually deploy Falcon during the lab. With them, everything auto-deploys. Required API scopes: Sensor Download (Read), Infrastructure as Code (Read), Falcon Images Download (Read), Falcon Container Image (Read+Write).</p>
+</div>
+
+<!-- Quick Start -->
+<h2 id="quick-start">Quick Start</h2>
+<h4>1. Clone and Configure</h4>
+<pre><code>git clone &lt;this-repo&gt;
+cd cloud-security-cnapp-lab
+cp terraform/terraform.tfvars.example terraform/terraform.tfvars
+# Edit terraform.tfvars with your settings</code></pre>
+
+<h4>2. Deploy (one command)</h4>
+<pre><code>./deploy.sh</code></pre>
+
+<h4>3. Access the Lab</h4>
+<p>If behind a VPN/proxy, use SSH port forwarding:</p>
+<pre><code>ssh -i .ssh/workshop-key.pem \
+  -L 30080:localhost:30080 \
+  -L 30300:localhost:30300 \
+  -L 30444:localhost:30444 \
+  -L 30888:localhost:30888 \
+  -N ubuntu@&lt;VICTIM_IP&gt;</code></pre>
+
+<table>
+  <tr><th>Service</th><th>URL</th><th>Credentials</th></tr>
+  <tr><td>Lab Guide</td><td><code>http://localhost:30080</code></td><td>—</td></tr>
+  <tr><td>Gitea</td><td><code>http://localhost:30300</code></td><td>workshop / Workshop2026!</td></tr>
+  <tr><td>ArgoCD</td><td><code>https://localhost:30444</code></td><td>admin / Workshop2026!</td></tr>
+  <tr><td>Peregrine App</td><td><code>http://localhost:30888</code></td><td>—</td></tr>
+  <tr><td>Attacker Desktop</td><td>RDP to attacker IP :3389</td><td>Administrator / Workshop2026!</td></tr>
+</table>
+
+<h4>4. Tear Down</h4>
+<pre><code>./destroy.sh</code></pre>
+
+<!-- deploy.sh -->
+<h2 id="deploy">deploy.sh</h2>
+<p><span class="tag tag-script">Script</span> The main orchestrator. Runs the entire deployment from scratch with a single command.</p>
+<div class="card">
+  <div class="card-title">What it does (in order):</div>
+  <p>1. Preflight checks — verifies terraform, ansible, and aws CLI are installed<br>
+  2. Detects AWS profile from terraform.tfvars<br>
+  3. Runs <code>terraform init</code> + <code>terraform apply -auto-approve</code><br>
+  4. Extracts victim IP, attacker IP, and environment alias from Terraform outputs<br>
+  5. Waits for SSH to become available on the victim VM (up to 5 min)<br>
+  6. Runs Ansible playbook (<code>victim.yml</code>) over SSH<br>
+  7. Prints a summary with all service URLs and credentials</p>
+</div>
+
+<!-- destroy.sh -->
+<h2 id="destroy">destroy.sh</h2>
+<p><span class="tag tag-script">Script</span> One-command teardown. Destroys all AWS resources.</p>
+<div class="card">
+  <div class="card-title">What it does:</div>
+  <p>Detects the AWS profile from terraform.tfvars, then runs <code>terraform destroy -auto-approve</code>. All EC2 instances, security groups, EIPs, and IAM resources are removed.</p>
+</div>
+
+<!-- Terraform -->
+<h2 id="terraform">Terraform — Infrastructure</h2>
+<p><span class="tag tag-tf">Terraform</span> The <code>terraform/</code> directory defines all AWS infrastructure as code.</p>
+
+<h3 id="tf-files">Core Files</h3>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>provider.tf</code></td><td>Configures AWS provider (~5.0), TLS, local, and random providers. Sets region/profile and applies default project tags.</td></tr>
+  <tr><td><code>variables.tf</code></td><td>All input variables: AWS region/profile, instance types, Falcon credentials, lab_mode, lab_scope, attack_mode, allowed_ips.</td></tr>
+  <tr><td><code>terraform.tfvars.example</code></td><td>Example config — copy to <code>terraform.tfvars</code> and fill in your values.</td></tr>
+  <tr><td><code>network.tf</code></td><td>References the default VPC and subnets (avoids VPC limit issues).</td></tr>
+  <tr><td><code>security.tf</code></td><td>Two security groups: victim (restricts inbound to allowed_ips) and attacker (allows RDP). Cross-SG rules for attacker↔victim traffic.</td></tr>
+  <tr><td><code>compute.tf</code></td><td>RSA key pair, Ubuntu 22.04 AMI lookup, victim EC2 + Elastic IP, Windows Server 2022 AMI for attacker, IAM instance profile, SSM provisioning.</td></tr>
+  <tr><td><code>outputs.tf</code></td><td>Exports IPs, SSH command, service URLs, RDP details. Generates the Ansible inventory file via <code>templatefile()</code>.</td></tr>
+</table>
+
+<h3 id="tf-templates">Templates</h3>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>templates/victim-userdata.sh.tpl</code></td><td>Minimal — just sets the EC2 hostname. Ansible handles all provisioning.</td></tr>
+  <tr><td><code>templates/inventory.yml.tpl</code></td><td>Ansible inventory template. Injects all Terraform variables (Falcon creds, IPs, lab config) as host vars.</td></tr>
+  <tr><td><code>templates/attacker-userdata-bootstrap.ps1.tpl</code></td><td><strong>Part A</strong> (~2.6 KB): Enables RDP, configures auto-logon, reboots into Part B.</td></tr>
+  <tr><td><code>templates/attacker-ssm-provision.ps1.tpl</code></td><td><strong>Part B</strong> (~14 KB): Delivered via SSM after boot. Installs Firefox, Metasploit, sets CrowdStrike wallpaper, completes Windows setup.</td></tr>
+  <tr><td><code>templates/attacker-userdata.ps1.tpl</code></td><td>Legacy monolithic version (deprecated). Split into bootstrap + SSM to stay under the user-data size limit.</td></tr>
+</table>
+
+<h3>Key Terraform Variables</h3>
+<table>
+  <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>aws_region</code></td><td>us-east-1</td><td>AWS region to deploy into</td></tr>
+  <tr><td><code>allowed_ips</code></td><td><em>required</em></td><td>CIDR blocks allowed to access workshop resources</td></tr>
+  <tr><td><code>auto_deploy_falcon</code></td><td>false</td><td>Auto-deploy Falcon sensor, KAC, and IAR to K3s</td></tr>
+  <tr><td><code>lab_mode</code></td><td>walkthrough</td><td><code>walkthrough</code> (guided) or <code>challenge</code> (gamified with scoring)</td></tr>
+  <tr><td><code>lab_scope</code></td><td>full</td><td><code>full</code>, <code>cicd_only</code>, <code>cdr_only</code>, or <code>express</code></td></tr>
+  <tr><td><code>attack_mode</code></td><td>hands_on</td><td><code>hands_on</code> (manual Metasploit), <code>button</code> (click-to-launch), <code>auto</code> (runs on provision)</td></tr>
+</table>
+
+<!-- Ansible -->
+<h2 id="ansible">Ansible — Provisioning</h2>
+<p><span class="tag tag-ansible">Ansible</span> The <code>ansible/</code> directory installs and configures all software on the victim VM via SSH.</p>
+
+<h4>Playbooks</h4>
+<table>
+  <tr><th>Playbook</th><th>Use Case</th></tr>
+  <tr><td><code>playbooks/victim.yml</code></td><td>Standard — runs over SSH from your laptop. Applies roles in order.</td></tr>
+  <tr><td><code>playbooks/victim-local.yml</code></td><td>CloudShare variant — runs with <code>connection: local</code> on the VM itself.</td></tr>
+  <tr><td><code>playbooks/attacker.yml</code></td><td>Deprecated — Windows attacker is now provisioned via PowerShell user_data.</td></tr>
+</table>
+
+<h4>Role Execution Order</h4>
+<div class="flow">
+  <span class="flow-step">common</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">k3s</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">gitea</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">falcon</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">argocd</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">sample-app</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">auto-attack</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">lab-guide</span>
+</div>
+
+<h3 id="role-common">Role: common</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/common/tasks/main.yml</div>
+  <p>Installs base system packages (curl, wget, git, jq), Docker engine, Helm CLI, and kernel sysctl settings. <strong>Intentionally installs liblog4j2-java</strong> to enable a Log4Shell (CVE-2021-44228) detection demo scenario.</p>
+</div>
+
+<h3 id="role-k3s">Role: k3s</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/k3s/tasks/main.yml</div>
+  <p>Installs K3s v1.30.2 (single-node, traefik disabled). Configures the private container registry to point at Gitea. Sets up kubeconfig for the <code>ubuntu</code> user. Waits for the cluster to become ready before continuing.</p>
+</div>
+
+<h3 id="role-gitea">Role: gitea</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/gitea/tasks/main.yml</div>
+  <p>Adds Gitea Helm repo, installs Gitea via Helm chart with custom values (NodePort 30300, admin user, Actions runner). Creates the <code>workshop</code> admin user. Deploys a Gitea Actions runner pod that executes CI/CD pipelines.</p>
+</div>
+<p><strong>Templates:</strong></p>
+<table>
+  <tr><td><code>gitea-values.yml.j2</code></td><td>Helm values: NodePort, credentials, persistence, registry config</td></tr>
+  <tr><td><code>gitea-runner.yml.j2</code></td><td>K8s Deployment for the CI/CD Actions runner</td></tr>
+</table>
+
+<h3 id="role-falcon">Role: falcon</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/falcon/tasks/main.yml</div>
+  <p>Conditionally deploys CrowdStrike Falcon (when <code>auto_deploy_falcon=true</code>). Auto-detects the cloud region via OAuth2 probe. Auto-detects the CID. Deploys the <code>falcon-platform</code> umbrella Helm chart (sensor + KAC + IAR). Injects Falcon API secrets into Gitea as Actions secrets for CI/CD image scanning.</p>
+</div>
+
+<h3 id="role-argocd">Role: argocd</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/argocd/tasks/main.yml</div>
+  <p>Installs ArgoCD v3.3.6 via Helm. Applies a copyutil patch (fixes CrashLoopBackOff). Reduces CPU requests for lab sizing. Sets the admin password. Registers the Gitea repository and creates the ArgoCD Application for the Peregrine app.</p>
+</div>
+
+<h3 id="role-sample-app">Role: sample-app</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/sample-app/tasks/main.yml</div>
+  <p>Copies the Peregrine application files, initializes a Git repo on Gitea, pushes all code (including the CI/CD pipeline definition), triggers the first CI/CD build, and waits for ArgoCD to sync the deployment to K3s.</p>
+</div>
+<p><strong>Key files pushed to Gitea:</strong></p>
+<table>
+  <tr><td><code>app.py</code></td><td>Flask app with intentional command injection at <code>/api/debug/health-check</code></td></tr>
+  <tr><td><code>requirements.txt</code></td><td>Includes aiohttp 3.9.1 (known CVEs for detection)</td></tr>
+  <tr><td><code>Dockerfile</code></td><td>Python 3.12 image with iputils-ping for the attack demo</td></tr>
+  <tr><td><code>deployment.yaml</code></td><td><code>runAsUser: 0</code> and hostPath mount — intentionally blocked by KAC</td></tr>
+  <tr><td><code>build-deploy.yaml</code></td><td>Gitea Actions CI/CD workflow with FCS image scanning</td></tr>
+</table>
+
+<h3 id="role-auto-attack">Role: auto-attack</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/auto-attack/tasks/main.yml</div>
+  <p>Controls attack delivery based on <code>attack_mode</code>:<br>
+  &bull; <code>hands_on</code> — skips (participants use Metasploit manually)<br>
+  &bull; <code>button</code> — stages a K8s Job manifest for one-click triggering<br>
+  &bull; <code>auto</code> — stages + immediately launches the attack Job at provision time</p>
+</div>
+
+<h3 id="role-lab-guide">Role: lab-guide</h3>
+<div class="card">
+  <div class="card-title">ansible/roles/lab-guide/tasks/main.yml</div>
+  <p>Fetches a malicious domain from Falcon Intel API (for IOC demo). Builds the React lab-guide Docker image. Pushes to Gitea's container registry. Deploys to K3s with a ConfigMap containing runtime config (IPs, CID, lab mode, scope, attack mode).</p>
+</div>
+
+<!-- Sample App -->
+<h2 id="sample-app">Sample App — Peregrine</h2>
+<p><span class="tag tag-app">Application</span> A deliberately vulnerable Flask web application that serves as the workshop's target.</p>
+
+<h4>Intentional Vulnerabilities</h4>
+<table>
+  <tr><th>Vulnerability</th><th>Location</th><th>CrowdStrike Detection</th></tr>
+  <tr><td>Command Injection</td><td><code>app.py</code> — <code>/api/debug/health-check</code> uses <code>shell=True</code></td><td>Falcon sensor runtime detection</td></tr>
+  <tr><td>CVE-2024-23334 (aiohttp)</td><td><code>requirements.txt</code></td><td>FCS image scan (ExPRT Critical)</td></tr>
+  <tr><td>Run as root</td><td><code>deployment.yaml</code> — <code>runAsUser: 0</code></td><td>Falcon KAC blocks deployment</td></tr>
+  <tr><td>Host path mount</td><td><code>deployment.yaml</code> — hostPath volume</td><td>Falcon KAC blocks deployment</td></tr>
+</table>
+
+<h3 id="cicd-pipeline">CI/CD Pipeline</h3>
+<p>The Gitea Actions workflow (<code>.gitea/workflows/build-deploy.yaml</code>) runs on every push to <code>main</code>:</p>
+<div class="flow">
+  <span class="flow-step">Docker Build</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">FCS Image Scan</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Push to Registry</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">Update K8s Manifest</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">ArgoCD Sync</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-step">KAC Check</span>
+</div>
+<p>The pipeline <strong>intentionally fails</strong> on the first run due to CVE-2020-14343 in PyYAML. Participants learn to fix the vulnerability and re-run.</p>
+
+<!-- Lab Guide -->
+<h2 id="lab-guide-app">Lab Guide — React SPA</h2>
+<p><span class="tag tag-react">React</span> The <code>lab-guide/</code> directory contains a React 18 + TypeScript + Vite interactive workshop guide.</p>
+
+<h4>Key Technologies</h4>
+<table>
+  <tr><td>React 18 + TypeScript</td><td>Component framework</td></tr>
+  <tr><td>Vite + Tailwind CSS v4</td><td>Build tooling and styling</td></tr>
+  <tr><td>Framer Motion</td><td>Animations (scroll reveal, confetti on completion)</td></tr>
+  <tr><td>Shiki</td><td>Syntax-highlighted code blocks</td></tr>
+  <tr><td>@xyflow/react</td><td>Interactive architecture diagram</td></tr>
+</table>
+
+<h4>Two Modes</h4>
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">Walkthrough Mode</div>
+    <p>17 guided steps (~90 min). Step-by-step instructions with code snippets, screenshots, and checklists.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Challenge Mode</div>
+    <p>15 gamified steps (~90-120 min). Scoring, achievements, hints with point penalties, difficulty multipliers.</p>
+  </div>
+</div>
+
+<h4>Runtime Configuration</h4>
+<p>The app fetches <code>/config.json</code> at startup (mounted as a K8s ConfigMap). This injects environment-specific values like victim IP, Falcon CID, lab mode, lab scope, and attack mode — so the same build works across different deployments.</p>
+
+<!-- CloudShare -->
+<h2 id="cloudshare">CloudShare Integration</h2>
+<p><span class="tag tag-docs">Platform</span> The <code>cloudshare/</code> directory enables deployment on CrowdStrike's internal CloudShare/Encounter lab platform (no direct AWS access needed by participants).</p>
+
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>build-stage.sh</code></td><td>Builds a tarball of Ansible playbooks (~4 MB) and generates the attacker userdata script. Run before every CloudShare upload.</td></tr>
+  <tr><td><code>creation.tf</code></td><td>CloudShare-specific Terraform: custom VPC, security groups, EC2 instances, IAM role with scoped attack permissions.</td></tr>
+  <tr><td><code>victim/userdata.sh</code></td><td>VM user-data: downloads the staged tarball, writes vars.yml from CloudShare template variables, runs Ansible locally.</td></tr>
+  <tr><td><code>victim/cloudshare-config.json</code></td><td>CloudShare blueprint config: static vars (Falcon CID, S3 URL) and runtime parameter definitions.</td></tr>
+  <tr><td><code>attacker/userdata.ps1</code></td><td>Generated file (never hand-edit). Output of build-stage.sh.</td></tr>
+  <tr><td><code>overview.html</code></td><td>Participant-facing overview page shown in CloudShare UI.</td></tr>
+</table>
+
+<div class="callout">
+  <p><strong>Both deployment modes</strong> (direct AWS and CloudShare) run the same Ansible roles and produce an identical lab experience. The only difference is who creates the VMs and how variables are injected.</p>
+</div>
+
+<!-- Docs -->
+<h2 id="docs">Documentation</h2>
+<p><span class="tag tag-docs">Docs</span> The <code>docs/</code> directory contains operational guides for lab administrators and workshop instructors.</p>
+
+<table>
+  <tr><th>File</th><th>Audience</th><th>Content</th></tr>
+  <tr><td><code>architecture.md</code></td><td>Admins</td><td>Two-VM architecture, services, Falcon components, deployment modes, networking</td></tr>
+  <tr><td><code>deployment.md</code></td><td>Admins</td><td>Step-by-step deploy guide for both direct AWS and CloudShare</td></tr>
+  <tr><td><code>lab-walkthrough.md</code></td><td>Instructors</td><td>12-step workshop flow narrative</td></tr>
+  <tr><td><code>victim-vm.md</code></td><td>Admins</td><td>Victim VM reference: K3s services, SSH, troubleshooting</td></tr>
+  <tr><td><code>attacker-vm.md</code></td><td>Admins</td><td>Attacker VM reference: RDP, Metasploit, credentials</td></tr>
+  <tr><td><code>troubleshooting.md</code></td><td>All</td><td>Common issues: SSH/RDP, Ansible, pods, image scan, KAC</td></tr>
+  <tr><td><code>cloudshare-admin-guide.md</code></td><td>Admins</td><td>CloudShare blueprint config, staged files, IAM, provisioning</td></tr>
+</table>
+
+<!-- Replication -->
+<h2 id="replication">Replicating This Lab</h2>
+<p>To set up this lab in your own AWS account:</p>
+
+<h4>Step 1: Get the prerequisites</h4>
+<pre><code># macOS
+brew install terraform ansible awscli
+
+# Verify
+terraform --version    # >= 1.5
+ansible --version      # >= 2.15
+aws sts get-caller-identity  # Must return your account</code></pre>
+
+<h4>Step 2: Configure your environment</h4>
+<pre><code>cp terraform/terraform.tfvars.example terraform/terraform.tfvars</code></pre>
+<p>Edit <code>terraform/terraform.tfvars</code>:</p>
+<pre><code>aws_region           = "us-west-2"           # Your preferred region
+allowed_ips          = ["YOUR.IP.HERE/32"]    # Your public IP
+victim_instance_type = "t3.large"            # Minimum for K3s + all services
+
+# Optional: auto-deploy CrowdStrike Falcon
+auto_deploy_falcon   = true
+falcon_client_id     = "your-oauth2-client-id"
+falcon_client_secret = "your-oauth2-client-secret"
+
+# Optional: customize lab experience
+lab_mode             = "walkthrough"          # or "challenge"
+lab_scope            = "full"                 # or "cicd_only", "cdr_only", "express"
+attack_mode          = "hands_on"            # or "button", "auto"</code></pre>
+
+<h4>Step 3: Deploy</h4>
+<pre><code>./deploy.sh
+# Takes ~8-12 minutes
+# Windows attacker VM needs ~10 more minutes after deploy</code></pre>
+
+<h4>Step 4: Access</h4>
+<p>The deploy script prints all URLs. If behind a VPN, use SSH port forwarding (see Quick Start above).</p>
+
+<h4>Step 5: Tear Down</h4>
+<pre><code>./destroy.sh</code></pre>
+
+<div class="callout">
+  <p><strong>Cost estimate:</strong> ~$0.15/hour (t3.large + t3.medium + EIPs). Always run <code>./destroy.sh</code> when done to avoid ongoing charges.</p>
+</div>
+
+<!-- Customization -->
+<h2 id="customization">Customization</h2>
+
+<h4>Change the lab experience</h4>
+<table>
+  <tr><th>Setting</th><th>Options</th><th>Effect</th></tr>
+  <tr><td><code>lab_mode</code></td><td><code>walkthrough</code> / <code>challenge</code></td><td>Guided steps vs. gamified with scoring</td></tr>
+  <tr><td><code>lab_scope</code></td><td><code>full</code> / <code>cicd_only</code> / <code>cdr_only</code> / <code>express</code></td><td>Which exercises are included</td></tr>
+  <tr><td><code>attack_mode</code></td><td><code>hands_on</code> / <code>button</code> / <code>auto</code></td><td>How the attack simulation is delivered</td></tr>
+</table>
+
+<h4>Add more allowed IPs</h4>
+<pre><code># terraform/terraform.tfvars
+allowed_ips = ["1.2.3.4/32", "5.6.7.8/32", "9.10.11.12/32"]
+
+# Apply changes
+cd terraform && terraform apply</code></pre>
+
+<h4>Modify the sample app</h4>
+<p>Edit files in <code>ansible/roles/sample-app/files/</code> and <code>ansible/roles/sample-app/templates/</code>, then re-run:</p>
+<pre><code>cd ansible && ansible-playbook playbooks/victim.yml -v --tags sample-app</code></pre>
+
+<h4>Change instance sizes</h4>
+<p>Update <code>victim_instance_type</code> / <code>attacker_instance_type</code> in terraform.tfvars. Minimum victim size is t3.large (K3s + all services need ~6GB RAM).</p>
+
+<!-- Footer -->
+<div style="margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center;">
+  <p style="font-size: 12px; color: var(--text-dim);">CrowdStrike CNAPP Workshop Lab &mdash; Internal Use</p>
+</div>
+
+</main>
+<!-- Theme Toggle -->
+<style>
+  .theme-toggle {
+    position: fixed; top: 16px; right: 20px; z-index: 9999;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 6px 14px; cursor: pointer;
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    transition: all 0.3s;
+  }
+  .theme-toggle:hover { border-color: var(--red); color: var(--text); }
+  .theme-toggle .toggle-icon { font-size: 14px; }
+
+  html.light-mode { --bg: #F5F5F5; --bg-card: #FFFFFF; --bg-card-hover: #FAFAFA; --border: #E0E0E0; --text: #1A1A1A; --text-muted: #555; --text-dim: #888; --code-bg: #F0F0F0; }
+  html.light-mode .sidebar { background: #FFFFFF; border-right-color: #E0E0E0; }
+  html.light-mode .sidebar nav a:hover { background: rgba(225,0,26,0.05); }
+  html.light-mode .hero { background: linear-gradient(135deg, #FFF5F5 0%, #F5F5F5 60%); }
+  html.light-mode pre { background: #F5F5F5; border-color: #E0E0E0; }
+  html.light-mode code { color: #1A1A1A; }
+  html.light-mode td code { color: var(--red); background: #F0F0F0; }
+  html.light-mode .card { background: #FFFFFF; border-color: #E0E0E0; }
+  html.light-mode .card:hover { border-color: var(--red); }
+  html.light-mode .flow { background: #FFFFFF; border-color: #E0E0E0; }
+  html.light-mode .flow-step { background: #F5F5F5; border-color: #E0E0E0; }
+  html.light-mode .arch-diagram { background: #FFFFFF; border-color: #E0E0E0; }
+  html.light-mode .arch-vpc { border-color: #E0E0E0; }
+  html.light-mode .arch-vpc-label { background: #FFFFFF; }
+  html.light-mode .arch-vm { background: #F8F8F8; border-color: #E0E0E0; }
+  html.light-mode .arch-svc { background: #FFFFFF; border-color: #E0E0E0; }
+  html.light-mode .callout { background: rgba(225,0,26,0.04); }
+  html.light-mode th { background: #F5F5F5; color: #333; }
+  html.light-mode td { color: #555; }
+  html.light-mode .theme-toggle { background: #FFF; border-color: #E0E0E0; color: #555; }
+</style>
+<div class="theme-toggle" onclick="toggleTheme()">
+  <span class="toggle-icon" id="theme-icon">&#9790;</span>
+  
+</div>
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.classList.toggle('light-mode');
+  const isLight = html.classList.contains('light-mode');
+  document.getElementById('theme-icon').innerHTML = isLight ? '&#9728;' : '&#9790;';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode');
+    document.getElementById('theme-icon').innerHTML = '&#9728;';
+  }
+})();
+</script>
+</body>
+</html>
