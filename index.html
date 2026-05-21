@@ -872,44 +872,46 @@ cd terraform && terraform apply</code></pre>
   .theme-toggle {
     position: fixed; top: 16px; right: 20px; z-index: 9999;
     display: flex; align-items: center; gap: 8px;
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 20px; padding: 6px 14px; cursor: pointer;
-    font-size: 12px; font-weight: 500; color: var(--text-muted);
-    transition: all 0.3s;
+    background: rgba(20,20,20,0.9); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 8px 12px; cursor: pointer;
+    font-size: 16px; color: #999; transition: all 0.3s;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  .theme-toggle:hover { border-color: var(--red); color: var(--text); }
-  .theme-toggle .toggle-icon { font-size: 14px; }
+  .theme-toggle:hover { border-color: #E1001A; color: #fff; }
 
   html.light-mode { --bg: #F5F5F5; --bg-card: #FFFFFF; --bg-card-hover: #FAFAFA; --border: #E0E0E0; --text: #1A1A1A; --text-muted: #555; --text-dim: #888; --code-bg: #F0F0F0; }
-  html.light-mode .sidebar { background: #FFFFFF; border-right-color: #E0E0E0; }
-  html.light-mode .sidebar nav a:hover { background: rgba(225,0,26,0.05); }
-  html.light-mode .hero { background: linear-gradient(135deg, #FFF5F5 0%, #F5F5F5 60%); }
-  html.light-mode pre { background: #F5F5F5; border-color: #E0E0E0; }
-  html.light-mode code { color: #1A1A1A; }
-  html.light-mode td code { color: var(--red); background: #F0F0F0; }
-  html.light-mode .card { background: #FFFFFF; border-color: #E0E0E0; }
-  html.light-mode .card:hover { border-color: var(--red); }
-  html.light-mode .flow { background: #FFFFFF; border-color: #E0E0E0; }
-  html.light-mode .flow-step { background: #F5F5F5; border-color: #E0E0E0; }
-  html.light-mode .arch-diagram { background: #FFFFFF; border-color: #E0E0E0; }
-  html.light-mode .arch-vpc { border-color: #E0E0E0; }
-  html.light-mode .arch-vpc-label { background: #FFFFFF; }
-  html.light-mode .arch-vm { background: #F8F8F8; border-color: #E0E0E0; }
-  html.light-mode .arch-svc { background: #FFFFFF; border-color: #E0E0E0; }
-  html.light-mode .callout { background: rgba(225,0,26,0.04); }
-  html.light-mode th { background: #F5F5F5; color: #333; }
-  html.light-mode td { color: #555; }
-  html.light-mode .theme-toggle { background: #FFF; border-color: #E0E0E0; color: #555; }
+  html.light-mode .sidebar { background: #FFFFFF !important; border-right-color: #E0E0E0 !important; }
+  html.light-mode .sidebar nav a:hover { background: rgba(225,0,26,0.05) !important; }
+  html.light-mode .hero { background: linear-gradient(135deg, #FFF5F5 0%, #F5F5F5 60%) !important; }
+  html.light-mode pre { background: #F5F5F5 !important; border-color: #E0E0E0 !important; }
+  html.light-mode code { color: #1A1A1A !important; }
+  html.light-mode td code { color: var(--red) !important; background: #F0F0F0 !important; }
+  html.light-mode .card { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
+  html.light-mode .card:hover { border-color: var(--red) !important; }
+  html.light-mode .card-title { color: #1A1A1A !important; }
+  html.light-mode .flow { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
+  html.light-mode .flow-step { background: #F5F5F5 !important; border-color: #E0E0E0 !important; color: #333 !important; }
+  html.light-mode .arch-diagram { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
+  html.light-mode .arch-vpc { border-color: #E0E0E0 !important; }
+  html.light-mode .arch-vpc-label { background: #FFFFFF !important; }
+  html.light-mode .arch-vm { background: #F8F8F8 !important; border-color: #E0E0E0 !important; }
+  html.light-mode .arch-svc { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
+  html.light-mode .callout { background: rgba(225,0,26,0.04) !important; }
+  html.light-mode th { background: #F5F5F5 !important; color: #333 !important; }
+  html.light-mode td { color: #555 !important; }
+  html.light-mode h2 { color: #1A1A1A !important; border-top-color: #E0E0E0 !important; }
+  html.light-mode h3 { color: #E1001A !important; }
+  html.light-mode .theme-toggle { background: rgba(255,255,255,0.9) !important; border-color: rgba(0,0,0,0.15) !important; color: #555 !important; }
+  html.light-mode .theme-toggle:hover { border-color: #E1001A !important; color: #000 !important; }
 </style>
 <div class="theme-toggle" onclick="toggleTheme()">
-  <span class="toggle-icon" id="theme-icon">&#9790;</span>
-  
+  <span id="theme-icon">&#9790;</span>
 </div>
 <script>
 function toggleTheme() {
-  const html = document.documentElement;
+  var html = document.documentElement;
   html.classList.toggle('light-mode');
-  const isLight = html.classList.contains('light-mode');
+  var isLight = html.classList.contains('light-mode');
   document.getElementById('theme-icon').innerHTML = isLight ? '&#9728;' : '&#9790;';
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
 }
