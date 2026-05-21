@@ -871,38 +871,171 @@ cd terraform && terraform apply</code></pre>
 <style>
   .theme-toggle {
     position: fixed; top: 16px; right: 20px; z-index: 9999;
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(20,20,20,0.9); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px; padding: 8px 12px; cursor: pointer;
-    font-size: 16px; color: #999; transition: all 0.3s;
+    background: rgba(20,20,20,0.85); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; color: #999; transition: all 0.3s;
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  .theme-toggle:hover { border-color: #E1001A; color: #fff; }
+  .theme-toggle:hover { border-color: #E1001A; color: #fff; transform: scale(1.1); }
 
-  html.light-mode { --bg: #F5F5F5; --bg-card: #FFFFFF; --bg-card-hover: #FAFAFA; --border: #E0E0E0; --text: #1A1A1A; --text-muted: #555; --text-dim: #888; --code-bg: #F0F0F0; }
-  html.light-mode .sidebar { background: #FFFFFF !important; border-right-color: #E0E0E0 !important; }
-  html.light-mode .sidebar nav a:hover { background: rgba(225,0,26,0.05) !important; }
-  html.light-mode .hero { background: linear-gradient(135deg, #FFF5F5 0%, #F5F5F5 60%) !important; }
-  html.light-mode pre { background: #F5F5F5 !important; border-color: #E0E0E0 !important; }
-  html.light-mode code { color: #1A1A1A !important; }
-  html.light-mode td code { color: var(--red) !important; background: #F0F0F0 !important; }
-  html.light-mode .card { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
-  html.light-mode .card:hover { border-color: var(--red) !important; }
-  html.light-mode .card-title { color: #1A1A1A !important; }
-  html.light-mode .flow { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
-  html.light-mode .flow-step { background: #F5F5F5 !important; border-color: #E0E0E0 !important; color: #333 !important; }
-  html.light-mode .arch-diagram { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
-  html.light-mode .arch-vpc { border-color: #E0E0E0 !important; }
-  html.light-mode .arch-vpc-label { background: #FFFFFF !important; }
-  html.light-mode .arch-vm { background: #F8F8F8 !important; border-color: #E0E0E0 !important; }
-  html.light-mode .arch-svc { background: #FFFFFF !important; border-color: #E0E0E0 !important; }
-  html.light-mode .callout { background: rgba(225,0,26,0.04) !important; }
-  html.light-mode th { background: #F5F5F5 !important; color: #333 !important; }
-  html.light-mode td { color: #555 !important; }
-  html.light-mode h2 { color: #1A1A1A !important; border-top-color: #E0E0E0 !important; }
-  html.light-mode h3 { color: #E1001A !important; }
-  html.light-mode .theme-toggle { background: rgba(255,255,255,0.9) !important; border-color: rgba(0,0,0,0.15) !important; color: #555 !important; }
+  /* NUCLEAR LIGHT MODE - catches everything */
+  html.light-mode * {
+    border-color: #E0E0E0 !important;
+  }
+  html.light-mode body,
+  html.light-mode #main,
+  html.light-mode main,
+  html.light-mode .content,
+  html.light-mode section {
+    background: #F5F5F5 !important;
+    color: #1A1A1A !important;
+  }
+
+  /* All dark surfaces → white */
+  html.light-mode div[class],
+  html.light-mode aside,
+  html.light-mode nav,
+  html.light-mode header,
+  html.light-mode footer {
+    background-color: transparent !important;
+  }
+  html.light-mode .header,
+  html.light-mode .hero {
+    background: linear-gradient(135deg, #FAFAFA 0%, #FFF5F5 50%, #F5F5F5 100%) !important;
+  }
+  html.light-mode .hero::before,
+  html.light-mode .header::before {
+    background: radial-gradient(circle, rgba(225,0,26,0.03) 0%, transparent 65%) !important;
+  }
+  html.light-mode #sidebar,
+  html.light-mode aside[class] {
+    background: #FFFFFF !important;
+    border-right: 1px solid #E0E0E0 !important;
+  }
+  html.light-mode .card,
+  html.light-mode .module,
+  html.light-mode .config-bar,
+  html.light-mode .component,
+  html.light-mode [class*="surface"],
+  html.light-mode [class*="card"] {
+    background: #FFFFFF !important;
+    border-color: #E0E0E0 !important;
+  }
+  html.light-mode .module-header {
+    background: #FAFAFA !important;
+  }
+  html.light-mode .module-body {
+    background: #FFFFFF !important;
+  }
+
+  /* Code */
+  html.light-mode pre,
+  html.light-mode .code-block,
+  html.light-mode [class*="code"] {
+    background: #F5F5F5 !important;
+    color: #333 !important;
+    border-color: #E0E0E0 !important;
+  }
+  html.light-mode .code-header {
+    background: #EEEEEE !important;
+    border-color: #E0E0E0 !important;
+  }
+  html.light-mode code {
+    background: rgba(0,0,0,0.05) !important;
+    color: #C8001A !important;
+  }
+  html.light-mode pre code {
+    background: transparent !important;
+    color: #333 !important;
+  }
+  /* Syntax highlighting */
+  html.light-mode .cm { color: #6A737D !important; }
+  html.light-mode .ck { color: #D73A49 !important; }
+  html.light-mode .cv { color: #005CC5 !important; }
+  html.light-mode .cs { color: #032F62 !important; }
+  html.light-mode .co { color: #E36209 !important; }
+
+  /* Text colors */
+  html.light-mode h1, html.light-mode h2, html.light-mode h4,
+  html.light-mode .card-title, html.light-mode .component-name,
+  html.light-mode .module-header h3, html.light-mode strong, html.light-mode b {
+    color: #1A1A1A !important;
+  }
+  html.light-mode h3 { color: #C8001A !important; }
+  html.light-mode p, html.light-mode li, html.light-mode td,
+  html.light-mode .module-intro, html.light-mode .card-desc,
+  html.light-mode .component-desc, html.light-mode .step-content,
+  html.light-mode label, html.light-mode .checklist li {
+    color: #444 !important;
+  }
+  html.light-mode .nav-item, html.light-mode nav a,
+  html.light-mode #sidebar a, html.light-mode .nav-section-label,
+  html.light-mode .section-label {
+    color: #666 !important;
+  }
+  html.light-mode .nav-item.active, html.light-mode nav a.active,
+  html.light-mode #sidebar a.active {
+    color: #1A1A1A !important;
+    background: rgba(225,0,26,0.06) !important;
+  }
+  html.light-mode .sidebar-title { color: #1A1A1A !important; }
+  html.light-mode .sidebar-footer, html.light-mode .footer { color: #999 !important; }
+  html.light-mode .stat-label, html.light-mode .hero-tag span { color: #666 !important; }
+  html.light-mode .stat-num { color: #C8001A !important; }
+
+  /* Tables */
+  html.light-mode th {
+    background: #F0F0F0 !important;
+    color: #333 !important;
+  }
+  html.light-mode td { color: #444 !important; }
+
+  /* Diagrams */
+  html.light-mode .diagram {
+    background: #FAFAFA !important;
+  }
+  html.light-mode .diagram svg text { fill: #333 !important; }
+  html.light-mode .diagram svg rect[fill] { fill: #FFFFFF !important; stroke: #CCC !important; }
+  html.light-mode .diagram svg line, html.light-mode .diagram svg path[stroke] { stroke: #999 !important; }
+
+  /* Info boxes */
+  html.light-mode .info-box { background: rgba(0,0,0,0.03) !important; }
+  html.light-mode .info-box.tip { background: rgba(74,158,255,0.06) !important; color: #1A5FAE !important; }
+  html.light-mode .info-box.warn { background: rgba(243,156,18,0.06) !important; color: #8A5400 !important; }
+  html.light-mode .info-box.note { background: rgba(155,89,182,0.06) !important; color: #6B2D8B !important; }
+
+  /* Inputs */
+  html.light-mode input, html.light-mode select, html.light-mode textarea {
+    background: #FFFFFF !important;
+    border-color: #DDD !important;
+    color: #1A1A1A !important;
+  }
+
+  /* Tabs / buttons */
+  html.light-mode [class*="tab-btn"],
+  html.light-mode [class*="deploy-tab"] {
+    background: #F0F0F0 !important;
+    color: #555 !important;
+  }
+  html.light-mode [class*="tab-btn"].active,
+  html.light-mode [class*="deploy-tab"].active {
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+    border-color: #C8001A !important;
+  }
+
+  /* Toggle itself in light */
+  html.light-mode .theme-toggle {
+    background: rgba(255,255,255,0.9) !important;
+    border-color: #DDD !important;
+    color: #555 !important;
+  }
   html.light-mode .theme-toggle:hover { border-color: #E1001A !important; color: #000 !important; }
+
+  /* Tags keep their colors */
+  html.light-mode .tag, html.light-mode [class*="tag-"] { color: inherit !important; }
+  html.light-mode .tag-red, html.light-mode [class*="tag-red"] { color: #C8001A !important; }
 </style>
 <div class="theme-toggle" onclick="toggleTheme()">
   <span id="theme-icon">&#9790;</span>
