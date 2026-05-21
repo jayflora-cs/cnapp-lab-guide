@@ -317,6 +317,112 @@ code { font-family: 'SF Mono', 'Fira Code', monospace; color: var(--text); }
 </style>
 </head>
 <body>
+<!-- THEME TOGGLE START -->
+<style id="theme-toggle-styles">
+.theme-toggle {
+  position: fixed; top: 16px; right: 20px; z-index: 99999;
+  background: rgba(20,20,20,0.85); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%; width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; color: #999; transition: all 0.3s;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.theme-toggle:hover { border-color: #E1001A; color: #fff; transform: scale(1.1); }
+</style>
+<div class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn">
+  <span id="theme-icon">&#9790;</span>
+</div>
+<script>
+(function(){
+  var LIGHT_CSS_ID = 'nuclear-light-mode-css';
+  
+  var lightCSS = `
+    html.light-mode, html.light-mode body { background: #F5F5F5 !important; color: #1A1A1A !important; }
+    html.light-mode * { color: inherit !important; border-color: #E0E0E0 !important; }
+    html.light-mode a { color: #C41230 !important; }
+    html.light-mode a:hover { color: #E1001A !important; }
+    html.light-mode h1, html.light-mode h2, html.light-mode h3, html.light-mode h4, html.light-mode h5, html.light-mode h6 { color: #111 !important; }
+    html.light-mode body, html.light-mode main, html.light-mode #main, html.light-mode .content, html.light-mode .main-content, html.light-mode .page-content { background: #F5F5F5 !important; }
+    html.light-mode div, html.light-mode section, html.light-mode article, html.light-mode aside, html.light-mode nav, html.light-mode header, html.light-mode footer { background-color: transparent !important; }
+    html.light-mode .header, html.light-mode .hero, html.light-mode .banner, html.light-mode [class*="hero"], html.light-mode [class*="header"], html.light-mode [class*="banner"] { background: linear-gradient(135deg, #FAFAFA 0%, #FFF5F5 50%, #F5F5F5 100%) !important; }
+    html.light-mode .hero::before, html.light-mode .header::before, html.light-mode [class*="hero"]::before { opacity: 0 !important; }
+    html.light-mode #sidebar, html.light-mode .sidebar, html.light-mode aside, html.light-mode [class*="sidebar"], html.light-mode [class*="nav-"] { background: #FFFFFF !important; border-right-color: #E0E0E0 !important; }
+    html.light-mode .sidebar a, html.light-mode #sidebar a, html.light-mode nav a { color: #333 !important; }
+    html.light-mode .sidebar a:hover, html.light-mode #sidebar a:hover, html.light-mode .sidebar a.active, html.light-mode #sidebar a.active { color: #C41230 !important; background: rgba(225,0,26,0.05) !important; }
+    html.light-mode .card, html.light-mode .module, html.light-mode .panel, html.light-mode [class*="card"], html.light-mode [class*="module"], html.light-mode [class*="panel"], html.light-mode [class*="box"], html.light-mode [class*="surface"], html.light-mode [class*="component"], html.light-mode [class*="item"], html.light-mode [class*="block"]:not(pre):not(code), html.light-mode .config-bar, html.light-mode .info-box, html.light-mode .note, html.light-mode .warning, html.light-mode .tip { background: #FFFFFF !important; border-color: #E0E0E0 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important; }
+    html.light-mode pre, html.light-mode .code-block, html.light-mode [class*="code-block"], html.light-mode .highlight { background: #F8F8F8 !important; border-color: #E0E0E0 !important; }
+    html.light-mode code { background: #F0F0F0 !important; color: #D73A49 !important; }
+    html.light-mode pre code { background: transparent !important; color: #24292E !important; }
+    html.light-mode .code-header, html.light-mode [class*="code-header"] { background: #EAEAEA !important; color: #555 !important; }
+    html.light-mode th, html.light-mode thead, html.light-mode [class*="table-head"] { background: #F0F0F0 !important; color: #111 !important; }
+    html.light-mode td, html.light-mode tr { background: #FFFFFF !important; color: #333 !important; border-color: #E0E0E0 !important; }
+    html.light-mode tr:nth-child(even) td { background: #FAFAFA !important; }
+    html.light-mode table { border-color: #E0E0E0 !important; }
+    html.light-mode input, html.light-mode select, html.light-mode textarea, html.light-mode button { background: #FFF !important; color: #333 !important; border-color: #CCC !important; }
+    html.light-mode .tab, html.light-mode [class*="tab"] { background: #F0F0F0 !important; color: #555 !important; }
+    html.light-mode .tab.active, html.light-mode [class*="tab"].active, html.light-mode .tab-active { background: #FFF !important; color: #C41230 !important; border-bottom-color: #C41230 !important; }
+    html.light-mode .badge, html.light-mode .tag, html.light-mode .chip, html.light-mode [class*="badge"], html.light-mode [class*="tag"] { background: #F0F0F0 !important; color: #555 !important; }
+    html.light-mode .diagram, html.light-mode [class*="diagram"], html.light-mode [class*="arch"], html.light-mode .mermaid, html.light-mode svg text { color: #333 !important; }
+    html.light-mode [class*="diagram"] *, html.light-mode [class*="arch"] * { background-color: #FFF !important; border-color: #DDD !important; color: #333 !important; }
+    html.light-mode .metric, html.light-mode [class*="metric"], html.light-mode [class*="stat"] { background: #FFF !important; color: #333 !important; }
+    html.light-mode [class*="metric"] .value, html.light-mode [class*="stat"] .value { color: #C41230 !important; }
+    html.light-mode li::marker { color: #C41230 !important; }
+    html.light-mode hr { border-color: #E0E0E0 !important; }
+    html.light-mode ::placeholder { color: #999 !important; }
+    html.light-mode .theme-toggle { background: rgba(255,255,255,0.95) !important; border-color: #DDD !important; color: #555 !important; }
+    html.light-mode .theme-toggle:hover { border-color: #E1001A !important; color: #E1001A !important; }
+    html.light-mode [style*="background"] { background: #FFFFFF !important; }
+    html.light-mode [style*="color"] { color: #333 !important; }
+    html.light-mode .step-number, html.light-mode [class*="step-num"], html.light-mode [class*="number"] { background: #C41230 !important; color: #FFF !important; }
+    html.light-mode .logo, html.light-mode [class*="logo"] { filter: none !important; }
+    html.light-mode blockquote { background: #FFF8F8 !important; border-left-color: #C41230 !important; }
+    html.light-mode .overlay, html.light-mode [class*="overlay"] { background: rgba(255,255,255,0.9) !important; }
+    html.light-mode details, html.light-mode summary { background: #FFF !important; }
+    html.light-mode mark, html.light-mode .highlight-text { background: #FFF3CD !important; color: #333 !important; }
+    html.light-mode [class*="grid"] { background: transparent !important; }
+    html.light-mode .section-title, html.light-mode [class*="section-title"], html.light-mode [class*="heading"] { color: #111 !important; }
+    html.light-mode span { color: inherit !important; }
+    html.light-mode p { color: #333 !important; }
+    html.light-mode li { color: #333 !important; }
+    html.light-mode strong, html.light-mode b { color: #111 !important; }
+    html.light-mode em, html.light-mode i:not(.theme-toggle *) { color: inherit !important; }
+  `;
+
+  function applyTheme(isLight) {
+    var existing = document.getElementById(LIGHT_CSS_ID);
+    if (isLight) {
+      if (!existing) {
+        var style = document.createElement('style');
+        style.id = LIGHT_CSS_ID;
+        style.textContent = lightCSS;
+        document.head.appendChild(style);
+      }
+      document.documentElement.classList.add('light-mode');
+    } else {
+      if (existing) existing.remove();
+      document.documentElement.classList.remove('light-mode');
+    }
+    var icon = document.getElementById('theme-icon');
+    if (icon) icon.innerHTML = isLight ? '&#9728;' : '&#9790;';
+    var btn = document.getElementById('theme-toggle-btn');
+    if (btn && isLight) { btn.style.background = 'rgba(255,255,255,0.95)'; btn.style.borderColor = '#DDD'; btn.style.color = '#555'; }
+    else if (btn) { btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; }
+  }
+
+  window.toggleTheme = function() {
+    var isLight = !document.documentElement.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    applyTheme(isLight);
+  };
+
+  // Apply on load
+  if (localStorage.getItem('theme') === 'light') {
+    applyTheme(true);
+  }
+})();
+</script>
+<!-- THEME TOGGLE END -->
+
 
 <aside class="sidebar">
   <div class="sidebar-brand">
@@ -868,192 +974,7 @@ cd terraform && terraform apply</code></pre>
 
 </main>
 <!-- Theme Toggle -->
-<style>
-  .theme-toggle {
-    position: fixed; top: 16px; right: 20px; z-index: 9999;
-    background: rgba(20,20,20,0.85); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 50%; width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 16px; color: #999; transition: all 0.3s;
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  }
-  .theme-toggle:hover { border-color: #E1001A; color: #fff; transform: scale(1.1); }
 
-  /* NUCLEAR LIGHT MODE - catches everything */
-  html.light-mode * {
-    border-color: #E0E0E0 !important;
-  }
-  html.light-mode body,
-  html.light-mode #main,
-  html.light-mode main,
-  html.light-mode .content,
-  html.light-mode section {
-    background: #F5F5F5 !important;
-    color: #1A1A1A !important;
-  }
 
-  /* All dark surfaces → white */
-  html.light-mode div[class],
-  html.light-mode aside,
-  html.light-mode nav,
-  html.light-mode header,
-  html.light-mode footer {
-    background-color: transparent !important;
-  }
-  html.light-mode .header,
-  html.light-mode .hero {
-    background: linear-gradient(135deg, #FAFAFA 0%, #FFF5F5 50%, #F5F5F5 100%) !important;
-  }
-  html.light-mode .hero::before,
-  html.light-mode .header::before {
-    background: radial-gradient(circle, rgba(225,0,26,0.03) 0%, transparent 65%) !important;
-  }
-  html.light-mode #sidebar,
-  html.light-mode aside[class] {
-    background: #FFFFFF !important;
-    border-right: 1px solid #E0E0E0 !important;
-  }
-  html.light-mode .card,
-  html.light-mode .module,
-  html.light-mode .config-bar,
-  html.light-mode .component,
-  html.light-mode [class*="surface"],
-  html.light-mode [class*="card"] {
-    background: #FFFFFF !important;
-    border-color: #E0E0E0 !important;
-  }
-  html.light-mode .module-header {
-    background: #FAFAFA !important;
-  }
-  html.light-mode .module-body {
-    background: #FFFFFF !important;
-  }
-
-  /* Code */
-  html.light-mode pre,
-  html.light-mode .code-block,
-  html.light-mode [class*="code"] {
-    background: #F5F5F5 !important;
-    color: #333 !important;
-    border-color: #E0E0E0 !important;
-  }
-  html.light-mode .code-header {
-    background: #EEEEEE !important;
-    border-color: #E0E0E0 !important;
-  }
-  html.light-mode code {
-    background: rgba(0,0,0,0.05) !important;
-    color: #C8001A !important;
-  }
-  html.light-mode pre code {
-    background: transparent !important;
-    color: #333 !important;
-  }
-  /* Syntax highlighting */
-  html.light-mode .cm { color: #6A737D !important; }
-  html.light-mode .ck { color: #D73A49 !important; }
-  html.light-mode .cv { color: #005CC5 !important; }
-  html.light-mode .cs { color: #032F62 !important; }
-  html.light-mode .co { color: #E36209 !important; }
-
-  /* Text colors */
-  html.light-mode h1, html.light-mode h2, html.light-mode h4,
-  html.light-mode .card-title, html.light-mode .component-name,
-  html.light-mode .module-header h3, html.light-mode strong, html.light-mode b {
-    color: #1A1A1A !important;
-  }
-  html.light-mode h3 { color: #C8001A !important; }
-  html.light-mode p, html.light-mode li, html.light-mode td,
-  html.light-mode .module-intro, html.light-mode .card-desc,
-  html.light-mode .component-desc, html.light-mode .step-content,
-  html.light-mode label, html.light-mode .checklist li {
-    color: #444 !important;
-  }
-  html.light-mode .nav-item, html.light-mode nav a,
-  html.light-mode #sidebar a, html.light-mode .nav-section-label,
-  html.light-mode .section-label {
-    color: #666 !important;
-  }
-  html.light-mode .nav-item.active, html.light-mode nav a.active,
-  html.light-mode #sidebar a.active {
-    color: #1A1A1A !important;
-    background: rgba(225,0,26,0.06) !important;
-  }
-  html.light-mode .sidebar-title { color: #1A1A1A !important; }
-  html.light-mode .sidebar-footer, html.light-mode .footer { color: #999 !important; }
-  html.light-mode .stat-label, html.light-mode .hero-tag span { color: #666 !important; }
-  html.light-mode .stat-num { color: #C8001A !important; }
-
-  /* Tables */
-  html.light-mode th {
-    background: #F0F0F0 !important;
-    color: #333 !important;
-  }
-  html.light-mode td { color: #444 !important; }
-
-  /* Diagrams */
-  html.light-mode .diagram {
-    background: #FAFAFA !important;
-  }
-  html.light-mode .diagram svg text { fill: #333 !important; }
-  html.light-mode .diagram svg rect[fill] { fill: #FFFFFF !important; stroke: #CCC !important; }
-  html.light-mode .diagram svg line, html.light-mode .diagram svg path[stroke] { stroke: #999 !important; }
-
-  /* Info boxes */
-  html.light-mode .info-box { background: rgba(0,0,0,0.03) !important; }
-  html.light-mode .info-box.tip { background: rgba(74,158,255,0.06) !important; color: #1A5FAE !important; }
-  html.light-mode .info-box.warn { background: rgba(243,156,18,0.06) !important; color: #8A5400 !important; }
-  html.light-mode .info-box.note { background: rgba(155,89,182,0.06) !important; color: #6B2D8B !important; }
-
-  /* Inputs */
-  html.light-mode input, html.light-mode select, html.light-mode textarea {
-    background: #FFFFFF !important;
-    border-color: #DDD !important;
-    color: #1A1A1A !important;
-  }
-
-  /* Tabs / buttons */
-  html.light-mode [class*="tab-btn"],
-  html.light-mode [class*="deploy-tab"] {
-    background: #F0F0F0 !important;
-    color: #555 !important;
-  }
-  html.light-mode [class*="tab-btn"].active,
-  html.light-mode [class*="deploy-tab"].active {
-    background: #FFFFFF !important;
-    color: #1A1A1A !important;
-    border-color: #C8001A !important;
-  }
-
-  /* Toggle itself in light */
-  html.light-mode .theme-toggle {
-    background: rgba(255,255,255,0.9) !important;
-    border-color: #DDD !important;
-    color: #555 !important;
-  }
-  html.light-mode .theme-toggle:hover { border-color: #E1001A !important; color: #000 !important; }
-
-  /* Tags keep their colors */
-  html.light-mode .tag, html.light-mode [class*="tag-"] { color: inherit !important; }
-  html.light-mode .tag-red, html.light-mode [class*="tag-red"] { color: #C8001A !important; }
-</style>
-<div class="theme-toggle" onclick="toggleTheme()">
-  <span id="theme-icon">&#9790;</span>
-</div>
-<script>
-function toggleTheme() {
-  var html = document.documentElement;
-  html.classList.toggle('light-mode');
-  var isLight = html.classList.contains('light-mode');
-  document.getElementById('theme-icon').innerHTML = isLight ? '&#9728;' : '&#9790;';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-}
-(function() {
-  if (localStorage.getItem('theme') === 'light') {
-    document.documentElement.classList.add('light-mode');
-    document.getElementById('theme-icon').innerHTML = '&#9728;';
-  }
-})();
-</script>
 </body>
 </html>
